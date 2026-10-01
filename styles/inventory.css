@@ -1,0 +1,281 @@
+/* モダン在庫カード (グリッドレイアウト) */
+        .order-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .inventory-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .modern-item-card {
+            padding: 12px;
+            margin-bottom: 0;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: transform 0.4s var(--ease-fluid), box-shadow 0.4s var(--ease-fluid);
+            animation: fadeInItem 0.6s var(--ease-fluid);
+        }
+
+        .modern-item-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+
+        .modern-item-top {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .item-image-box {
+            width: 100%;
+            height: 90px;
+            background-color: rgba(255,255,255,0.4);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.03);
+        }
+
+        .item-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modern-item-header {
+            height: 75px !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .modern-item-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.3;
+            word-break: break-all;
+        }
+
+        .modern-location-badge {
+            font-size: 11px;
+            background: rgba(0,0,0,0.05);
+            color: var(--text-sub);
+            padding: 4px 8px;
+            border-radius: 8px;
+            display: inline-block;
+            width: fit-content;
+            font-weight: 600;
+        }
+
+        .modern-location-select {
+            background: rgba(0, 113, 227, 0.08);
+            color: var(--accent-color);
+            border: 1px solid rgba(0, 113, 227, 0.15);
+            border-radius: 8px;
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: 700;
+            width: fit-content;
+            max-width: 100%;
+            appearance: none;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin: 0;
+        }
+
+        /* ステッパー */
+        .glass-stepper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            padding: 4px;
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.8), 0 4px 12px rgba(0,0,0,0.03);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .stepper-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s cubic-bezier(0.25, 1, 0.3, 1);
+            padding: 0;
+            line-height: 1;
+        }
+
+        .stepper-btn.minus {
+            background: white;
+            color: var(--accent-color);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+
+        .stepper-btn.minus:active {
+            transform: scale(0.85);
+            background: #f8f9fa;
+        }
+
+        .stepper-btn.plus {
+            background: var(--accent-color);
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 113, 227, 0.3);
+        }
+
+        .stepper-btn.plus:active {
+            transform: scale(0.85);
+            background: #0056b3;
+        }
+
+        .stepper-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            min-width: 0;
+            padding: 0 8px;
+            gap: 4px;
+        }
+
+        .stepper-input {
+            width: 100%;
+            max-width: 55px;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-main);
+            text-align: center;
+            border: none !important;
+            background: transparent !important;
+            padding: 4px !important;
+            margin: 0 !important;
+            font-family: inherit;
+            -webkit-appearance: none;
+            -moz-appearance: textfield;
+            transition: all 0.2s;
+            box-shadow: none !important;
+        }
+
+        .stepper-input:focus {
+            outline: none !important;
+            background: rgba(255, 255, 255, 0.8) !important;
+            border-radius: 6px !important;
+            border: none !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
+        }
+
+        .stepper-input::-webkit-inner-spin-button, .stepper-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .stepper-unit {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-sub);
+            white-space: nowrap;
+            flex-shrink: 0;
+            position: relative;
+            top: 1px;
+        }
+
+        /* アクションボタン */
+        .modern-item-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .modern-action-btn {
+            padding: 12px 2px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s var(--ease-fluid);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            color: var(--text-main);
+            letter-spacing: 0.5px;
+        }
+
+        .modern-action-btn:hover {
+            background: rgba(255,255,255,0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .modern-action-btn:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .modern-action-btn.edit {
+            color: var(--accent-color);
+            background: rgba(0, 113, 227, 0.05);
+        }
+
+        .modern-action-btn.order {
+            color: var(--warning-color);
+            background: rgba(255, 159, 10, 0.05);
+        }
+
+        .modern-action-btn.delete {
+            color: var(--danger-color);
+            background: rgba(255, 59, 48, 0.05);
+        }
+
+        .category-header {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-sub);
+            margin: 30px 0 15px 5px;
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .category-header span {
+            background: rgba(0,0,0,0.08);
+            color: var(--text-sub);
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-left: 10px;
+            font-weight: 700;
+        }

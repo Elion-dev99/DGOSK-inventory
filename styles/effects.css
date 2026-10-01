@@ -1,0 +1,100 @@
+/* ▼▼▼ 追加：Liquid Glass エフェクトの適用とアニメーション ▼▼▼ */
+        /* 主要アクションボタンへの適用 */
+        /* 1. ボタン用：GPUバグ対策と角丸のクリッピング強化 */
+        .btn-main {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            background: linear-gradient(135deg, #007aff, #0056b3, #007aff); /* 色を3つにして流れるように */
+            background-size: 200% 200%;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.3, 1), box-shadow 0.4s ease;
+            box-shadow: 0 8px 25px rgba(0, 122, 255, 0.3), inset 0 2px 2px rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            -webkit-transform: translateZ(0); /* ちらつき防止 */
+            transform: translateZ(0);
+        }
+
+        /* 常に波打つようなアニメーション */
+        @keyframes flowGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .btn-main {
+            animation: flowGradient 6s ease infinite;
+        }
+
+        /* ホバー時の「ぽよん」とした動き */
+        .btn-main:hover {
+            transform: scale(1.03) translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0, 122, 255, 0.4), inset 0 2px 2px rgba(255, 255, 255, 0.5);
+        }
+
+        /* タップ時の水滴を押すような動き */
+        .btn-main:active {
+            transform: scale(0.96) translateY(2px);
+            box-shadow: 0 4px 10px rgba(0, 122, 255, 0.2), inset 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 表面の「光の反射（ハイライト）」を疑似要素で作る */
+        .btn-main::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-20deg);
+            transition: all 0.5s ease;
+            z-index: 2;
+            pointer-events: none; /* クリックを阻害しない */
+        }
+
+        .btn-main:hover::after {
+            left: 200%;
+            transition: all 1s ease-in-out;
+        }
+
+        /* 2. アクションシート用：背景(::before)にだけフィルターをかける */
+        #action-sheet {
+            transform: translateY(100%) translateZ(0);
+            transition: transform 0.4s var(--ease-fluid);
+            z-index: 3001;
+            /* 背景自体は透明にして、::beforeで作る */
+            background: transparent;
+        }
+
+        #action-sheet::before {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px; /* 歪む分の余白 */
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+            -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+            border-radius: 35px 35px 0 0;
+            z-index: -1;
+            /* ▼ 光の計算を消した安全なSVGフィルターを適用 */
+            filter: url('#liquid-glass-effect');
+            animation: liquidPulse 6s infinite alternate ease-in-out;
+            will-change: filter;
+        }
+
+        /* PC版レイアウトでのシート丸み調整 */
+        @media screen and (min-width: 768px) {
+            #action-sheet::before {
+                border-radius: 35px;
+            }
+        }
+
+        #action-sheet.active {
+            transform: translateY(0) translateZ(0);
+        }
+
+        @keyframes liquidPulse {
+            0% { filter: url('#liquid-glass-effect'); }
+            100% { filter: url('#liquid-glass-effect') brightness(1.05); }
+        }
+
+        #action-sheet.active {
+            animation: liquidPulse 4s infinite ease-in-out;
+        }
+        /* ▲▲▲ 追加ここまで ▲▲▲ */
